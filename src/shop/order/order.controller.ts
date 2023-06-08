@@ -2,10 +2,6 @@ import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
 import { OrderService } from '../../../shop_shared_server/service/order/order.service';
 import { OrderAdminDto } from '../../../shop_shared/dto/order/order.dto';
 import { mapOrderDocumentToOrderAdminDto } from '../../../shop_shared_server/mapper/order/map.orderDocument-to-orderAdminDto';
-import { ProductListAdminResponseDto } from '../../../shop_shared/dto/product/product-list.admin.response.dto';
-import { ObjectId } from 'mongodb';
-import { LanguageEnum } from '../../../shop_shared/constants/localization';
-import { mapProductDocumentToProductAdminDto } from '../../../shop_shared_server/mapper/product/map.productDocument-to-productAdminDto';
 import { OrderListAdminResponseDto } from '../../../shop_shared/dto/product/order-list.admin.response.dto';
 
 @Controller('order')
