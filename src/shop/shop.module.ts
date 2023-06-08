@@ -18,8 +18,14 @@ import {
   Category,
   CategorySchema,
 } from '../../shop_shared_server/schema/category.schema';
-import { ProductService } from "../../shop_shared_server/service/product/product.service";
-import { CategoryService } from "../../shop_shared_server/service/category/category.service";
+import { ProductService } from '../../shop_shared_server/service/product/product.service';
+import { CategoryService } from '../../shop_shared_server/service/category/category.service';
+import { OrderService } from '../../shop_shared_server/service/order/order.service';
+import { OrderController } from './order/order.controller';
+import {
+  Order,
+  OrderSchema,
+} from '../../shop_shared_server/schema/order.schema';
 
 @Module({
   imports: [
@@ -28,9 +34,10 @@ import { CategoryService } from "../../shop_shared_server/service/category/categ
       { name: ItemAttribute.name, schema: ItemAttributeSchema },
       { name: CategoriesTree.name, schema: CategoriesTreeSchema },
       { name: Category.name, schema: CategorySchema },
+      { name: Order.name, schema: OrderSchema },
     ]),
   ],
-  providers: [ProductService, CategoryService],
-  controllers: [ProductController, CategoryController],
+  providers: [ProductService, CategoryService, OrderService],
+  controllers: [ProductController, CategoryController, OrderController],
 })
 export class ShopModule {}
