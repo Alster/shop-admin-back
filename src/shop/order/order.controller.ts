@@ -27,6 +27,7 @@ export class OrderController {
     @Query('skip') skip: number,
     @Query('limit') limit: number,
     @Query('search') search: string,
+    @Query('status') status: string,
   ): Promise<OrderListAdminResponseDto> {
     const query: any = {};
     if (search) {
@@ -38,6 +39,10 @@ export class OrderController {
     const sort: any = {};
     if (sortField) {
       sort[sortField] = sortOrder;
+    }
+
+    if (status) {
+      query.status = status;
     }
 
     const res = await this.orderService.find(query, sort, skip, limit);
