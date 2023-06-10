@@ -40,6 +40,7 @@ export class ProductController {
     @Body() updateData: ProductAdminDto,
     @Param('id') id: string,
   ): Promise<ProductAdminDto> {
+    updateData.price = Math.ceil(updateData.price * 100);
     const res = await this.productService.updateProduct(id, updateData);
     if (!res) {
       throw new Error(`Product not found with id ${id}`);
