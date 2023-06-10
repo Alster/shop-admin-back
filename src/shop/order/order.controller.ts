@@ -1,9 +1,9 @@
 import { Controller, Get, Logger, Param, Post, Query } from '@nestjs/common';
-import { OrderService } from '../../../shop_shared_server/service/order/order.service';
-import { OrderAdminDto } from '../../../shop_shared/dto/order/order.dto';
-import { mapOrderDocumentToOrderAdminDto } from '../../../shop_shared_server/mapper/order/map.orderDocument-to-orderAdminDto';
-import { OrderListAdminResponseDto } from '../../../shop_shared/dto/product/order-list.admin.response.dto';
-import { ORDER_STATUS } from '../../../shop_shared/constants/order';
+import { OrderService } from '../../../shop-shared-server/service/order/order.service';
+import { OrderAdminDto } from '../../../shop-shared/dto/order/order.dto';
+import { mapOrderDocumentToOrderAdminDto } from '../../../shop-shared-server/mapper/order/map.orderDocument-to-orderAdminDto';
+import { OrderListAdminResponseDto } from '../../../shop-shared/dto/product/order-list.admin.response.dto';
+import { ORDER_STATUS } from '../../../shop-shared/constants/order';
 
 @Controller('order')
 export class OrderController {

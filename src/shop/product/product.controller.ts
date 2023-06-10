@@ -7,16 +7,16 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { CreateProductRequestDto } from '../../../shop_shared_server/dto/create-product.request.dto';
+import { CreateProductRequestDto } from '../../../shop-shared-server/dto/create-product.request.dto';
 import { ObjectId } from 'mongodb';
-import { LanguageEnum } from '../../../shop_shared/constants/localization';
-import { ProductService } from '../../../shop_shared_server/service/product/product.service';
-import { ProductAdminDto } from '../../../shop_shared/dto/product/product.dto';
-import { mapProductDocumentToProductAdminDto } from '../../../shop_shared_server/mapper/product/map.productDocument-to-productAdminDto';
-import { AttributeDto } from '../../../shop_shared/dto/product/attribute.dto';
-import { mapAttributeDocumentToAttributeDTO } from '../../../shop_shared_server/mapper/product/map.attributeDocument-to-attributeDTO';
-import { ProductListAdminResponseDto } from '../../../shop_shared/dto/product/product-list.admin.response.dto';
-import { UpdateProductRequestDto } from '../../../shop_shared/dto/product/updateProductRequest.dto';
+import { LanguageEnum } from '../../../shop-shared/constants/localization';
+import { ProductService } from '../../../shop-shared-server/service/product/product.service';
+import { ProductAdminDto } from '../../../shop-shared/dto/product/product.dto';
+import { mapProductDocumentToProductAdminDto } from '../../../shop-shared-server/mapper/product/map.productDocument-to-productAdminDto';
+import { AttributeDto } from '../../../shop-shared/dto/product/attribute.dto';
+import { mapAttributeDocumentToAttributeDTO } from '../../../shop-shared-server/mapper/product/map.attributeDocument-to-attributeDTO';
+import { ProductListAdminResponseDto } from '../../../shop-shared/dto/product/product-list.admin.response.dto';
+import { UpdateProductRequestDto } from '../../../shop-shared/dto/product/updateProductRequest.dto';
 
 @Controller('product')
 export class ProductController {

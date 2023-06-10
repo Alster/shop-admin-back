@@ -5,7 +5,7 @@ import { ShopModule } from './shop/shop.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Config } from './config/config';
 import mongoose from 'mongoose';
-import { validateAndThrow } from '../shop_shared_server/helpers/validate-and-throw';
+import { validateAndThrow } from '../shop-shared-server/helpers/validate-and-throw';
 
 @Module({
   imports: [

@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
-import { LanguageEnum } from '../../../shop_shared/constants/localization';
-import { CategoryService } from '../../../shop_shared_server/service/category/category.service';
-import { CategoriesNodeDto } from '../../../shop_shared/dto/category/categories-tree.dto';
+import { LanguageEnum } from '../../../shop-shared/constants/localization';
+import { CategoryService } from '../../../shop-shared-server/service/category/category.service';
+import { CategoriesNodeDto } from '../../../shop-shared/dto/category/categories-tree.dto';
 import {
   mapCategoriesNodeDTOToCategoryNode,
   mapCategoriesTreeDocumentToCategoriesTreeDTO,
-} from '../../../shop_shared_server/mapper/category/map.categoriesTreeDocument-to-categoriesTreeDTO';
-import { CategoryDto } from '../../../shop_shared/dto/category/category.dto';
-import { mapCategoryToCategoryDto } from '../../../shop_shared_server/mapper/category/map.category-to-categoryDTO';
+} from '../../../shop-shared-server/mapper/category/map.categoriesTreeDocument-to-categoriesTreeDTO';
+import { CategoryDto } from '../../../shop-shared/dto/category/category.dto';
+import { mapCategoryToCategoryDto } from '../../../shop-shared-server/mapper/category/map.category-to-categoryDTO';
 
 @Controller('category')
 export class CategoryController {
