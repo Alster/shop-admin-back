@@ -16,6 +16,7 @@ import { mapProductDocumentToProductAdminDto } from '../../../shop_shared_server
 import { AttributeDto } from '../../../shop_shared/dto/product/attribute.dto';
 import { mapAttributeDocumentToAttributeDTO } from '../../../shop_shared_server/mapper/product/map.attributeDocument-to-attributeDTO';
 import { ProductListAdminResponseDto } from '../../../shop_shared/dto/product/product-list.admin.response.dto';
+import { UpdateProductRequestDto } from '../../../shop_shared/dto/product/updateProductRequest.dto';
 
 @Controller('product')
 export class ProductController {
@@ -37,10 +38,10 @@ export class ProductController {
 
   @Post('update/:id')
   async postUpdate(
-    @Body() updateData: ProductAdminDto,
+    @Body() updateData: UpdateProductRequestDto,
     @Param('id') id: string,
   ): Promise<ProductAdminDto> {
-    updateData.price = Math.ceil(updateData.price * 100);
+    console.log(updateData);
     const res = await this.productService.updateProduct(id, updateData);
     if (!res) {
       throw new Error(`Product not found with id ${id}`);
