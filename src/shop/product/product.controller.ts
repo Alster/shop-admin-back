@@ -16,7 +16,7 @@ import { mapProductDocumentToProductAdminDto } from '../../../shop-shared-server
 import { AttributeDto } from '../../../shop-shared/dto/product/attribute.dto';
 import { mapAttributeDocumentToAttributeDTO } from '../../../shop-shared-server/mapper/product/map.attributeDocument-to-attributeDTO';
 import { ProductListAdminResponseDto } from '../../../shop-shared/dto/product/product-list.admin.response.dto';
-import { UpdateProductRequestDto } from '../../../shop-shared/dto/product/updateProductRequest.dto';
+import { UpdateProductRequestDto } from '../../../shop-shared-server/dto/updateProductRequest.dto';
 
 @Controller('product')
 export class ProductController {
