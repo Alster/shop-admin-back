@@ -27,6 +27,8 @@
     "bson": "5.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "cookies-next": "^2.1.2",
+    "ioredis": "^5.3.2",
     "mongodb": "4.14.0",
     "mongoose": "^6",
     "reflect-metadata": "^0.1.13",

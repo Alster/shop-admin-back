@@ -4,3 +4,6 @@
 [submodule "shop-shared"]
 	path = shop-shared
 	url = git@github.com:Alster/shop-shared.git
+[submodule "shop-exchange-shared"]
+	path = shop-exchange-shared
+	url = git@github.com:Alster/shop-exchange-shared.git
