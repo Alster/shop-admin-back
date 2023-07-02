@@ -87,7 +87,11 @@ export class ProductController {
       });
     }
     if (categories) {
-      query.categoriesAll = { $in: categories.map((id) => new ObjectId(id)) };
+      query.categoriesAll = {
+        $in: categories
+          .filter((v) => ObjectId.isValid(v))
+          .map((id) => new ObjectId(id)),
+      };
     }
     if (search) {
       query.$text = {
