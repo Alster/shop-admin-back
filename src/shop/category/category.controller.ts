@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
 import { LanguageEnum } from '../../../shop-shared/constants/localization';
 import { CategoryService } from '../../../shop-shared-server/service/category/category.service';
-import { CategoriesNodeDto } from '../../../shop-shared/dto/category/categories-tree.dto';
+import { CategoriesNodeAdminDto } from '../../../shop-shared/dto/category/categories-tree.dto';
 import {
   mapCategoriesNodeDTOToCategoryNode,
-  mapCategoriesTreeDocumentToCategoriesTreeDTO,
-} from '../../../shop-shared-server/mapper/category/map.categoriesTreeDocument-to-categoriesTreeDTO';
+  mapCategoriesTreeDocumentToCategoriesTreeAdminDTO,
+} from '../../../shop-shared-server/mapper/category/map.categoriesTreeDocument-to-categoriesTreeAdminDTO';
 import { CategoryDto } from '../../../shop-shared/dto/category/category.dto';
 import { mapCategoryToCategoryDto } from '../../../shop-shared-server/mapper/category/map.category-to-categoryDTO';
 
@@ -16,14 +16,14 @@ export class CategoryController {
   private logger: Logger = new Logger(CategoryController.name);
 
   @Get('tree')
-  async getCategoriesTrees(): Promise<CategoriesNodeDto[]> {
+  async getCategoriesTrees(): Promise<CategoriesNodeAdminDto[]> {
     const categoriesTree = await this.categoryService.getCategoriesTree();
-    return mapCategoriesTreeDocumentToCategoriesTreeDTO(categoriesTree).root;
+    return mapCategoriesTreeDocumentToCategoriesTreeAdminDTO(categoriesTree).root;
   }
 
   @Post('tree')
   async saveCategoriesTrees(
-    @Body() categoriesNodes: CategoriesNodeDto[],
+    @Body() categoriesNodes: CategoriesNodeAdminDto[],
   ): Promise<void> {
     const nodes = categoriesNodes.map(mapCategoriesNodeDTOToCategoryNode);
     await this.categoryService.saveCategoriesTree(nodes);
