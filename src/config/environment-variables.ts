@@ -1,15 +1,15 @@
-import { IsPort, IsUrl } from 'class-validator';
-import { MongooseModuleOptions } from '@nestjs/mongoose/dist/interfaces/mongoose-options.interface';
+import { MongooseModuleOptions } from "@nestjs/mongoose/dist/interfaces/mongoose-options.interface";
+import { IsPort, IsUrl } from "class-validator";
 
 export class MongoConfig {
-  @IsUrl()
-  readonly url!: string;
+	@IsUrl()
+	readonly url!: string;
 
-  readonly options!: MongooseModuleOptions;
+	readonly options!: MongooseModuleOptions;
 }
 
 export class EnvironmentVariables {
-  @IsPort()
-  readonly port!: string;
-  readonly mongo!: MongoConfig;
+	@IsPort()
+	readonly port!: string;
+	readonly mongo!: MongoConfig;
 }
