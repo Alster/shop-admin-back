@@ -2,5 +2,12 @@
   "port": 4300,
   "mongo": {
     "url": "mongodb://localhost:27037/unicorn"
+  },
+  "s3": {
+    "endpoint": "",
+    "accessKeyId": "AKIA44XF64BER7HDQ2WT",
+    "secretAccessKey": "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",
+    "bucket": "unicorn-bleak",
+    "region": "eu-central-1"
   }
 }

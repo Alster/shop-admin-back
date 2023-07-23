@@ -20,6 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.374.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
     "@nestjs/mongoose": "^9.2.1",
@@ -31,16 +32,20 @@
     "ioredis": "^5.3.2",
     "mongodb": "4.14.0",
     "mongoose": "^6",
+    "multer": "^1.4.5-lts.1",
+    "nestjs-s3": "^2.0.1",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "sharp": "^0.32.4"
   },
   "devDependencies": {
     "@darraghor/eslint-plugin-nestjs-typed": "^3.21.2",
     "@nestjs/cli": "^9.0.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
-    "@types/express": "^4.17.13",
+    "@types/express": "^4.17.17",
     "@types/jest": "29.2.4",
+    "@types/multer": "^1.4.7",
     "@types/node": "18.11.18",
     "@types/supertest": "^2.0.11",
     "@types/uuid": "^9.0.2",

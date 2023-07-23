@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
+import { S3Module } from "nestjs-s3";
 
 import {
 	CategoriesTree,
@@ -15,7 +16,9 @@ import { Product, ProductSchema } from "../../shop-shared-server/schema/product.
 import { CategoryService } from "../../shop-shared-server/service/category/category.service";
 import { OrderService } from "../../shop-shared-server/service/order/order.service";
 import { ProductService } from "../../shop-shared-server/service/product/product.service";
+import { Config } from "../config/config";
 import { CategoryController } from "./category/category.controller";
+import { ImageUploaderService } from "./imageUploader.service";
 import { OrderController } from "./order/order.controller";
 import { ProductController } from "./product/product.controller";
 
@@ -28,8 +31,18 @@ import { ProductController } from "./product/product.controller";
 			{ name: Category.name, schema: CategorySchema },
 			{ name: Order.name, schema: OrderSchema },
 		]),
+		S3Module.forRoot({
+			config: {
+				credentials: {
+					accessKeyId: Config.get().s3.accessKeyId,
+					secretAccessKey: Config.get().s3.secretAccessKey,
+				},
+				region: Config.get().s3.region,
+				// forcePathStyle: true,
+			},
+		}),
 	],
-	providers: [ProductService, CategoryService, OrderService],
+	providers: [ProductService, CategoryService, OrderService, ImageUploaderService],
 	controllers: [ProductController, CategoryController, OrderController],
 })
 export class ShopModule {}

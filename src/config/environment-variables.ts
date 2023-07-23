@@ -12,4 +12,12 @@ export class EnvironmentVariables {
 	@IsPort()
 	readonly port!: string;
 	readonly mongo!: MongoConfig;
+
+	readonly s3!: {
+		readonly endpoint: string;
+		readonly accessKeyId: string;
+		readonly secretAccessKey: string;
+		readonly bucket: string;
+		readonly region: string;
+	};
 }
