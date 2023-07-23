@@ -1,4 +1,19 @@
-import { Body, Controller, Get, Logger, Param, Post, Query } from "@nestjs/common";
+import {
+	Body,
+	Controller,
+	FileTypeValidator,
+	Get,
+	Logger,
+	MaxFileSizeValidator,
+	Param,
+	ParseFilePipe,
+	Post,
+	Query,
+	UploadedFile,
+	UseInterceptors,
+} from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { Express } from "express";
 import { ObjectId } from "mongodb";
 
 import { LanguageEnum } from "../../../shop-shared/constants/localization";
@@ -7,13 +22,18 @@ import { ProductAdminDto } from "../../../shop-shared/dto/product/product.dto";
 import { ProductListAdminResponseDto } from "../../../shop-shared/dto/product/productList.admin.response.dto";
 import { CreateProductRequestDto } from "../../../shop-shared-server/dto/createProduct.request.dto";
 import { UpdateProductRequestDto } from "../../../shop-shared-server/dto/updateProduct.request.dto";
+import randomString from "../../../shop-shared-server/helpers/randomString";
 import { mapAttributeDocumentToAttributeDto } from "../../../shop-shared-server/mapper/product/map.attributeDocument.to.attributeDto";
 import { mapProductDocumentToProductAdminDto } from "../../../shop-shared-server/mapper/product/map.productDocument.to.productAdminDto";
 import { ProductService } from "../../../shop-shared-server/service/product/product.service";
+import { ImageUploaderService } from "../imageUploader.service";
 
 @Controller("product")
 export class ProductController {
-	constructor(private readonly productService: ProductService) {}
+	constructor(
+		private readonly productService: ProductService,
+		private readonly imageUploaderService: ImageUploaderService,
+	) {}
 
 	private logger: Logger = new Logger(ProductController.name);
 
@@ -115,5 +135,23 @@ export class ProductController {
 		return result.map((attribute) =>
 			mapAttributeDocumentToAttributeDto(attribute, LanguageEnum.UA),
 		);
+	}
+
+	@Post("uploadImage")
+	@UseInterceptors(FileInterceptor("image"))
+	async uploadFile(
+		@UploadedFile(
+			new ParseFilePipe({
+				fileIsRequired: true,
+				validators: [
+					new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 5 }),
+					new FileTypeValidator({ fileType: "image/jpeg" }),
+				],
+			}),
+		)
+		file: Express.Multer.File,
+	): Promise<string> {
+		// console.log(JSON.stringify(file, undefined, 2));
+		return this.imageUploaderService.uploadProductImage(file.buffer);
 	}
 }
