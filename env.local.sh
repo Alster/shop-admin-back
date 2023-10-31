@@ -58,7 +58,7 @@ run() {
   clean
 
   echo "Running docker..."
-  docker-compose -f docker-compose.local.yaml up --build -d
+  docker compose -f docker-compose.local.yaml up --build -d
   run_mongo $MONGO_SINGLE_REPLICA 27037
 }
 
@@ -67,12 +67,12 @@ run_daemon() {
   clean
 
   echo "Running docker..."
-  docker-compose -f docker-compose.local.yaml up --build --detach
+  docker compose -f docker-compose.local.yaml up --build --detach
   echo "Started as daemon"
 }
 
 stop_existing() {
-  docker-compose -f docker-compose.local.yaml down --remove-orphans
+  docker compose -f docker-compose.local.yaml down --remove-orphans
 }
 
 remove_stopped_containers() {
