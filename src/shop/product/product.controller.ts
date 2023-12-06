@@ -1,3 +1,4 @@
+/* eslint-disable @darraghor/nestjs-typed/api-method-should-specify-api-response */
 import {
 	Body,
 	Controller,
@@ -22,7 +23,6 @@ import { ProductAdminDto } from "../../../shop-shared/dto/product/product.dto";
 import { ProductListAdminResponseDto } from "../../../shop-shared/dto/product/productList.admin.response.dto";
 import { CreateProductRequestDto } from "../../../shop-shared-server/dto/createProduct.request.dto";
 import { UpdateProductRequestDto } from "../../../shop-shared-server/dto/updateProduct.request.dto";
-import randomString from "../../../shop-shared-server/helpers/randomString";
 import { mapAttributeDocumentToAttributeDto } from "../../../shop-shared-server/mapper/product/map.attributeDocument.to.attributeDto";
 import { mapProductDocumentToProductAdminDto } from "../../../shop-shared-server/mapper/product/map.productDocument.to.productAdminDto";
 import { ProductService } from "../../../shop-shared-server/service/product/product.service";
@@ -111,13 +111,13 @@ export class ProductController {
 		const sort: any = {};
 		if (sortField) {
 			if (sortField === "title") {
-				sort[`${sortField}.${LanguageEnum.UA}`] = sortOrder;
+				sort[`${sortField}.${LanguageEnum.ua}`] = sortOrder;
 			} else {
 				sort[sortField] = sortOrder;
 			}
 		}
 
-		const result = await this.productService.find(query, sort, skip, limit, LanguageEnum.UA);
+		const result = await this.productService.find(query, sort, skip, limit, LanguageEnum.ua);
 
 		return {
 			products: result.products.map((product) =>
@@ -133,7 +133,7 @@ export class ProductController {
 	async getAttributes(): Promise<AttributeDto[]> {
 		const result = await this.productService.getAttributes();
 		return result.map((attribute) =>
-			mapAttributeDocumentToAttributeDto(attribute, LanguageEnum.UA),
+			mapAttributeDocumentToAttributeDto(attribute, LanguageEnum.ua),
 		);
 	}
 

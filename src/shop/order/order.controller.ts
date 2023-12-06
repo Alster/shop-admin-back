@@ -5,6 +5,8 @@ import { OrderAdminDto } from "../../../shop-shared/dto/order/order.dto";
 import { OrderListAdminResponseDto } from "../../../shop-shared/dto/product/orderList.admin.response.dto";
 import { mapOrderDocumentToOrderAdminDto } from "../../../shop-shared-server/mapper/order/map.orderDocument.to.orderAdminDto";
 import { OrderService } from "../../../shop-shared-server/service/order/order.service";
+import { FilterQuery } from "mongoose";
+import { OrderDocument } from "../../../shop-shared-server/schema/order.schema";
 
 @Controller("order")
 export class OrderController {
@@ -30,7 +32,7 @@ export class OrderController {
 		@Query("search") search: string,
 		@Query("status") status: string,
 	): Promise<OrderListAdminResponseDto> {
-		const query: any = {};
+		const query: FilterQuery<OrderDocument> = {};
 		if (search) {
 			query.$text = {
 				$search: search,

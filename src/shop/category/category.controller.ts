@@ -1,3 +1,4 @@
+/* eslint-disable @darraghor/nestjs-typed/api-method-should-specify-api-response */
 import { Body, Controller, Get, Logger, Post } from "@nestjs/common";
 
 import { LanguageEnum } from "../../../shop-shared/constants/localization";
@@ -31,6 +32,6 @@ export class CategoryController {
 	@Get("list")
 	async getCategories(): Promise<CategoryDto[]> {
 		const categories = await this.categoryService.getCategories();
-		return categories.map((category) => mapCategoryToCategoryDto(category, LanguageEnum.UA));
+		return categories.map((category) => mapCategoryToCategoryDto(category, LanguageEnum.ua));
 	}
 }

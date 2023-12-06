@@ -6,7 +6,7 @@ export interface IImageConfiguration {
 	postfix: string;
 }
 
-export const ImageConfigurations: { [key in KindEnum]: IImageConfiguration[] } = {
+export const ImageConfigurations = {
 	[KindEnum.ProductImages]: [
 		{
 			width: 1024,
@@ -24,4 +24,4 @@ export const ImageConfigurations: { [key in KindEnum]: IImageConfiguration[] } =
 			postfix: "small",
 		},
 	],
-};
+} as const satisfies { [key in KindEnum]: IImageConfiguration[] };
