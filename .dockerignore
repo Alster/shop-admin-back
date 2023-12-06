@@ -1,0 +1,12 @@
+/node_modules
+/__tests__
+/__mocks__
+/coverage
+/docker
+/build
+/dist
+/requests
+/.yarn
+/.github
+/.run
+/spec.json
