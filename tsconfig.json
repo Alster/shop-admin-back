@@ -7,6 +7,9 @@
     ".eslintrc.js",
     "**/*/.eslintrc.*.js",
     "src/**/*",
+    "shop-shared-server/**/*",
+    "shop-shared/**/*",
+    "shop-exchange-shared/**/*",
     "package.json",
     "src/**/package.json",
   ]

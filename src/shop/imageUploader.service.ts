@@ -1,11 +1,8 @@
-import * as Buffer from "node:buffer";
-import * as fs from "node:fs";
-
 import { Injectable, OnModuleInit } from "@nestjs/common";
 import { InjectS3, S3 } from "nestjs-s3";
+import sharp from "sharp";
 
-const sharp = require("sharp");
-
+import getProductImageFilename from "../../shop-shared/utils/getProductImageFilename";
 import randomString from "../../shop-shared-server/helpers/randomString";
 import { Config } from "../config/config";
 import { ImageConfigurations } from "../constants/imageConfigurations";
@@ -20,7 +17,7 @@ export class ImageUploaderService implements OnModuleInit {
 		this.bucketName = Config.get().s3.bucket;
 	}
 
-	async onModuleInit() {
+	async onModuleInit(): Promise<void> {
 		// console.log("ImageUploaderService.onModuleInit()");
 		// const imageBuffer = fs.readFileSync(
 		// 	"./671092-beautiful-sunset-wallpapers-2560x1600-for-windows-7.jpg",
@@ -29,9 +26,9 @@ export class ImageUploaderService implements OnModuleInit {
 		// await this.uploadImage(imageBuffer, "test.jpg");
 	}
 
-	async uploadProductImage(referenceImageBuffer: Buffer): Promise<string> {
+	async uploadProductImage(productId: string, referenceImageBuffer: Buffer): Promise<string> {
 		const kind = KindEnum.ProductImages;
-		const uid = randomString(FILENAME_SIZE);
+		const imageId = randomString(FILENAME_SIZE);
 		const imageConfigs = ImageConfigurations[kind];
 
 		await Promise.all(
@@ -45,19 +42,19 @@ export class ImageUploaderService implements OnModuleInit {
 				const proceededImage = await pipeline
 					.toFormat("jpeg")
 					.jpeg({
-						quality: 100,
-						// quality: 80,
+						// quality: 100,
+						quality: 80,
 						// chromaSubsampling: "4:4:4",
 						force: true,
 					})
 					.toBuffer();
 
-				const filename = `${kind}/${uid}_${config.postfix}.jpeg`;
+				const filename = getProductImageFilename(productId, imageId, config.postfix);
 				await this.push(filename, proceededImage);
 			}),
 		);
 
-		return uid;
+		return imageId;
 	}
 
 	private async push(key: string, buffer: Buffer): Promise<void> {

@@ -137,9 +137,9 @@ export class ProductController {
 		);
 	}
 
-	@Post("uploadImage")
+	@Post("upload-product-image")
 	@UseInterceptors(FileInterceptor("image"))
-	async uploadFile(
+	async uploadProductFile(
 		@UploadedFile(
 			new ParseFilePipe({
 				fileIsRequired: true,
@@ -150,8 +150,9 @@ export class ProductController {
 			}),
 		)
 		file: Express.Multer.File,
+		@Body() { productId }: { productId: string },
 	): Promise<string> {
 		// console.log(JSON.stringify(file, undefined, 2));
-		return this.imageUploaderService.uploadProductImage(file.buffer);
+		return this.imageUploaderService.uploadProductImage(productId, file.buffer);
 	}
 }
