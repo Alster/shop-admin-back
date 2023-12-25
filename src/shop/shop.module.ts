@@ -21,6 +21,8 @@ import { CategoryController } from "./category/category.controller";
 import { ImageUploaderService } from "./imageUploader.service";
 import { OrderController } from "./order/order.controller";
 import { ProductController } from "./product/product.controller";
+import SeedController from "./seed/seed.controller";
+import SeedService from "./seed/seed.service";
 
 @Module({
 	imports: [
@@ -42,7 +44,7 @@ import { ProductController } from "./product/product.controller";
 			},
 		}),
 	],
-	providers: [ProductService, CategoryService, OrderService, ImageUploaderService],
-	controllers: [ProductController, CategoryController, OrderController],
+	providers: [ProductService, CategoryService, OrderService, ImageUploaderService, SeedService],
+	controllers: [ProductController, CategoryController, OrderController, SeedController],
 })
 export class ShopModule {}

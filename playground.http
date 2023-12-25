@@ -1,3 +1,4 @@
+### Create product
 POST http://localhost:4300/product/create
 Content-Type: application/json
 
@@ -6,4 +7,11 @@ Content-Type: application/json
     "price": 42
 }
 
-###
+### Seed categiries
+POST http://localhost:4300/seed/categories
+
+### Seed attributes
+POST http://localhost:4300/seed/attributes
+
+### Seed products
+POST http://localhost:4300/seed/products
