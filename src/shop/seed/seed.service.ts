@@ -14,15 +14,15 @@ import {
 	ItemAttributeDocument,
 } from "../../../shop-shared-server/schema/itemAttribute.schema";
 import { ProductDocument } from "../../../shop-shared-server/schema/product.schema";
-import categoriesTree from "../../../shop-shared-server/seed/categoriesTree.example.json";
-import attributeColor from "../../../shop-shared-server/seed/itemAttribute.color.example.json";
-import attributeCondition from "../../../shop-shared-server/seed/itemAttribute.condition.example.json";
-import attributeFabricComposition from "../../../shop-shared-server/seed/itemAttribute.fabricComposition.example.json";
-import attributeSize from "../../../shop-shared-server/seed/itemAttribute.size.example.json";
-import attributeSizeShoes from "../../../shop-shared-server/seed/itemAttribute.sizeShoes.example.json";
-import attributeStyle from "../../../shop-shared-server/seed/itemAttribute.style.example.json";
 import { CategoryService } from "../../../shop-shared-server/service/category/category.service";
 import { ProductService } from "../../../shop-shared-server/service/product/product.service";
+import categoriesTree from "../../seed/categoriesTree.example.json";
+import attributeColor from "../../seed/itemAttribute.color.example.json";
+import attributeCondition from "../../seed/itemAttribute.condition.example.json";
+import attributeFabricComposition from "../../seed/itemAttribute.fabricComposition.example.json";
+import attributeSize from "../../seed/itemAttribute.size.example.json";
+import attributeSizeShoes from "../../seed/itemAttribute.sizeShoes.example.json";
+import attributeStyle from "../../seed/itemAttribute.style.example.json";
 import { ImageUploaderService } from "../imageUploader.service";
 
 const addObjectId = <

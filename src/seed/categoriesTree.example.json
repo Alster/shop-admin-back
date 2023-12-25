@@ -1,0 +1,605 @@
+[
+  {
+    "_id": "6589a3feb90431e2aac71d4a",
+    "title": {
+      "ua": "Чоловічий одяг",
+      "en": "For men",
+      "ru": "Для мужчин"
+    },
+    "description": {
+      "ua": "Чоловічий одяг",
+      "en": "For men",
+      "ru": "Для мужчин"
+    },
+    "sort": 1,
+    "active": true,
+    "publicId": "for-men",
+    "children": [
+      {
+        "_id": "6589a3feb90431e2aac71d4b",
+        "title": {
+          "ua": "Футболки",
+          "en": "T-shirts",
+          "ru": "Футболки"
+        },
+        "description": {
+          "ua": "Футболки",
+          "en": "T-shirts",
+          "ru": "Футболки"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "t-shirts",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d4c",
+        "title": {
+          "ua": "Штани",
+          "en": "Pants",
+          "ru": "Брюки"
+        },
+        "description": {
+          "ua": "Штани",
+          "en": "Pants",
+          "ru": "Брюки"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "pants",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d4d",
+        "title": {
+          "ua": "Куртки",
+          "en": "Jackets",
+          "ru": "Куртки"
+        },
+        "description": {
+          "ua": "Куртки",
+          "en": "Jackets",
+          "ru": "Куртки"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "jackets",
+        "children": [
+          {
+            "_id": "6589a3feb90431e2aac71d4e",
+            "title": {
+              "ua": "Куртки",
+              "en": "Jackets",
+              "ru": "Куртки"
+            },
+            "description": {
+              "ua": "Куртки",
+              "en": "Jackets",
+              "ru": "Куртки"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "jackets",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d4f",
+            "title": {
+              "ua": "Пальта",
+              "en": "Coats",
+              "ru": "Пальто"
+            },
+            "description": {
+              "ua": "Пальта",
+              "en": "Coats",
+              "ru": "Пальто"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "coats",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d50",
+            "title": {
+              "ua": "Плащі",
+              "en": "Raincoats",
+              "ru": "Плащи"
+            },
+            "description": {
+              "ua": "Плащі",
+              "en": "Raincoats",
+              "ru": "Плащи"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "raincoats",
+            "children": []
+          }
+        ]
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d51",
+        "title": {
+          "ua": "Взуття",
+          "en": "Shoes",
+          "ru": "Обувь"
+        },
+        "description": {
+          "ua": "Взуття",
+          "en": "Shoes",
+          "ru": "Обувь"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "shoes",
+        "children": [
+          {
+            "_id": "6589a3feb90431e2aac71d52",
+            "title": {
+              "ua": "Кросівки",
+              "en": "Sneakers",
+              "ru": "Кроссовки"
+            },
+            "description": {
+              "ua": "Кросівки",
+              "en": "Sneakers",
+              "ru": "Кроссовки"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "sneakers",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d53",
+            "title": {
+              "ua": "Черевики",
+              "en": "Boots",
+              "ru": "Ботинки"
+            },
+            "description": {
+              "ua": "Черевики",
+              "en": "Boots",
+              "ru": "Ботинки"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "boots",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d54",
+            "title": {
+              "ua": "Тапочки",
+              "en": "Slippers",
+              "ru": "Тапочки"
+            },
+            "description": {
+              "ua": "Тапочки",
+              "en": "Slippers",
+              "ru": "Тапочки"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "slippers",
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "_id": "6589a3feb90431e2aac71d55",
+    "title": {
+      "ua": "Жіночий одяг",
+      "en": "For woman",
+      "ru": "Для женщин"
+    },
+    "description": {
+      "ua": "Жіночий одяг",
+      "en": "For woman",
+      "ru": "Для женщин"
+    },
+    "sort": 1,
+    "active": true,
+    "publicId": "for-woman",
+    "children": [
+      {
+        "_id": "6589a3feb90431e2aac71d56",
+        "title": {
+          "ua": "Футболки",
+          "en": "T-shirts",
+          "ru": "Футболки"
+        },
+        "description": {
+          "ua": "Футболки",
+          "en": "T-shirts",
+          "ru": "Футболки"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "t-shirts",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d57",
+        "title": {
+          "ua": "Штани",
+          "en": "Pants",
+          "ru": "Брюки"
+        },
+        "description": {
+          "ua": "Штани",
+          "en": "Pants",
+          "ru": "Брюки"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "pants",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d58",
+        "title": {
+          "ua": "Куртки",
+          "en": "Jackets",
+          "ru": "Куртки"
+        },
+        "description": {
+          "ua": "Куртки",
+          "en": "Jackets",
+          "ru": "Куртки"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "jackets",
+        "children": [
+          {
+            "_id": "6589a3feb90431e2aac71d59",
+            "title": {
+              "ua": "Куртки",
+              "en": "Jackets",
+              "ru": "Куртки"
+            },
+            "description": {
+              "ua": "Куртки",
+              "en": "Jackets",
+              "ru": "Куртки"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "jackets",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d5a",
+            "title": {
+              "ua": "Пальта",
+              "en": "Coats",
+              "ru": "Пальто"
+            },
+            "description": {
+              "ua": "Пальта",
+              "en": "Coats",
+              "ru": "Пальто"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "coats",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d5b",
+            "title": {
+              "ua": "Плащі",
+              "en": "Raincoats",
+              "ru": "Плащи"
+            },
+            "description": {
+              "ua": "Плащі",
+              "en": "Raincoats",
+              "ru": "Плащи"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "raincoats",
+            "children": []
+          }
+        ]
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d5c",
+        "title": {
+          "ua": "Взуття",
+          "en": "Shoes",
+          "ru": "Обувь"
+        },
+        "description": {
+          "ua": "Взуття",
+          "en": "Shoes",
+          "ru": "Обувь"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "shoes",
+        "children": [
+          {
+            "_id": "6589a3feb90431e2aac71d5d",
+            "title": {
+              "ua": "Кросівки",
+              "en": "Sneakers",
+              "ru": "Кроссовки"
+            },
+            "description": {
+              "ua": "Кросівки",
+              "en": "Sneakers",
+              "ru": "Кроссовки"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "sneakers",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d5e",
+            "title": {
+              "ua": "Черевики",
+              "en": "Boots",
+              "ru": "Ботинки"
+            },
+            "description": {
+              "ua": "Черевики",
+              "en": "Boots",
+              "ru": "Ботинки"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "boots",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d5f",
+            "title": {
+              "ua": "Тапочки",
+              "en": "Slippers",
+              "ru": "Тапочки"
+            },
+            "description": {
+              "ua": "Тапочки",
+              "en": "Slippers",
+              "ru": "Тапочки"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "slippers",
+            "children": []
+          }
+        ]
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d60",
+        "title": {
+          "ua": "Спідниці",
+          "en": "Skirts",
+          "ru": "Юбки"
+        },
+        "description": {
+          "ua": "Спідниці",
+          "en": "Skirts",
+          "ru": "Юбки"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "skirts",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d61",
+        "title": {
+          "ua": "Сукні",
+          "en": "Dresses",
+          "ru": "Платья"
+        },
+        "description": {
+          "ua": "Сукні",
+          "en": "Dresses",
+          "ru": "Платья"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "dresses",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d62",
+        "title": {
+          "ua": "Блузки",
+          "en": "Blouses",
+          "ru": "Блузки"
+        },
+        "description": {
+          "ua": "Блузки",
+          "en": "Blouses",
+          "ru": "Блузки"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "blouses",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d63",
+        "title": {
+          "ua": "Світери",
+          "en": "Sweaters",
+          "ru": "Свитера"
+        },
+        "description": {
+          "ua": "Світери",
+          "en": "Sweaters",
+          "ru": "Свитера"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "sweaters",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d64",
+        "title": {
+          "ua": "Сорочки",
+          "en": "Shirts",
+          "ru": "Рубашки"
+        },
+        "description": {
+          "ua": "Сорочки",
+          "en": "Shirts",
+          "ru": "Рубашки"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "shirts",
+        "children": []
+      }
+    ]
+  },
+  {
+    "_id": "6589a3feb90431e2aac71d65",
+    "title": {
+      "ua": "Особливі пропозиції",
+      "en": "Special offers",
+      "ru": "Особые предложения"
+    },
+    "description": {
+      "ua": "Особливі пропозиції",
+      "en": "Special offers",
+      "ru": "Особые предложения"
+    },
+    "sort": 1,
+    "active": true,
+    "publicId": "special-offers",
+    "children": []
+  },
+  {
+    "_id": "6589a3feb90431e2aac71d66",
+    "title": {
+      "ua": "Декор",
+      "en": "Decor",
+      "ru": "Декор"
+    },
+    "description": {
+      "ua": "Декор",
+      "en": "Decor",
+      "ru": "Декор"
+    },
+    "sort": 1,
+    "active": true,
+    "publicId": "decor",
+    "children": [
+      {
+        "_id": "6589a3feb90431e2aac71d67",
+        "title": {
+          "ua": "Свічки",
+          "en": "Candles",
+          "ru": "Свечи"
+        },
+        "description": {
+          "ua": "Свічки",
+          "en": "Candles",
+          "ru": "Свечи"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "candles",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d68",
+        "title": {
+          "ua": "Постери",
+          "en": "Posters",
+          "ru": "Постеры"
+        },
+        "description": {
+          "ua": "Постери",
+          "en": "Posters",
+          "ru": "Постеры"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "posters",
+        "children": []
+      },
+      {
+        "_id": "6589a3feb90431e2aac71d69",
+        "title": {
+          "ua": "Меблі",
+          "en": "Furniture",
+          "ru": "Мебель"
+        },
+        "description": {
+          "ua": "Меблі",
+          "en": "Furniture",
+          "ru": "Мебель"
+        },
+        "sort": 1,
+        "active": true,
+        "publicId": "furniture",
+        "children": [
+          {
+            "_id": "6589a3feb90431e2aac71d6a",
+            "title": {
+              "ua": "Стільці",
+              "en": "Chairs",
+              "ru": "Стулья"
+            },
+            "description": {
+              "ua": "Стільці",
+              "en": "Chairs",
+              "ru": "Стулья"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "chairs",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d6b",
+            "title": {
+              "ua": "Столи",
+              "en": "Tables",
+              "ru": "Столы"
+            },
+            "description": {
+              "ua": "Столи",
+              "en": "Tables",
+              "ru": "Столы"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "tables",
+            "children": []
+          },
+          {
+            "_id": "6589a3feb90431e2aac71d6c",
+            "title": {
+              "ua": "Шафи",
+              "en": "Cupboards",
+              "ru": "Шкафы"
+            },
+            "description": {
+              "ua": "Шафи",
+              "en": "Cupboards",
+              "ru": "Шкафы"
+            },
+            "sort": 1,
+            "active": true,
+            "publicId": "cupboards",
+            "children": []
+          }
+        ]
+      }
+    ]
+  }
+]

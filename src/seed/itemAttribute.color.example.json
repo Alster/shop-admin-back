@@ -1,0 +1,144 @@
+{
+  "title": {
+    "en": "Color",
+    "ua": "Колір",
+    "ru": "Цвет"
+  },
+  "description": {
+    "en": "Color",
+    "ua": "Колір",
+    "ru": "Цвет"
+  },
+  "key": "color",
+  "type": "select",
+  "values": [
+    {
+      "key": "red",
+      "title": {
+        "en": "Red",
+        "ua": "Червоний",
+        "ru": "Красный"
+      }
+    },
+    {
+      "key": "green",
+      "title": {
+        "en": "Green",
+        "ua": "Зелений",
+        "ru": "Зеленый"
+      }
+    },
+    {
+      "key": "blue",
+      "title": {
+        "en": "Blue",
+        "ua": "Синій",
+        "ru": "Синий"
+      }
+    },
+    {
+      "key": "yellow",
+      "title": {
+        "en": "Yellow",
+        "ua": "Жовтий",
+        "ru": "Желтый"
+      }
+    },
+    {
+      "key": "black",
+      "title": {
+        "en": "Black",
+        "ua": "Чорний",
+        "ru": "Черный"
+      }
+    },
+    {
+      "key": "white",
+      "title": {
+        "en": "White",
+        "ua": "Білий",
+        "ru": "Белый"
+      }
+    },
+    {
+      "key": "grey",
+      "title": {
+        "en": "Grey",
+        "ua": "Сірий",
+        "ru": "Серый"
+      }
+    },
+    {
+      "key": "brown",
+      "title": {
+        "en": "Brown",
+        "ua": "Коричневий",
+        "ru": "Коричневый"
+      }
+    },
+    {
+      "key": "orange",
+      "title": {
+        "en": "Orange",
+        "ua": "Помаранчевий",
+        "ru": "Оранжевый"
+      }
+    },
+    {
+      "key": "pink",
+      "title": {
+        "en": "Pink",
+        "ua": "Рожевий",
+        "ru": "Розовый"
+      }
+    },
+    {
+      "key": "purple",
+      "title": {
+        "en": "Purple",
+        "ua": "Фіолетовий",
+        "ru": "Фиолетовый"
+      }
+    },
+    {
+      "key": "beige",
+      "title": {
+        "en": "Beige",
+        "ua": "Бежевий",
+        "ru": "Бежевый"
+      }
+    },
+    {
+      "key": "gold",
+      "title": {
+        "en": "Gold",
+        "ua": "Золотий",
+        "ru": "Золотой"
+      }
+    },
+    {
+      "key": "silver",
+      "title": {
+        "en": "Silver",
+        "ua": "Срібний",
+        "ru": "Серебряный"
+      }
+    },
+    {
+      "key": "multicolor",
+      "title": {
+        "en": "Multicolor",
+        "ua": "Багатокольоровий",
+        "ru": "Многоколор"
+      }
+    },
+    {
+      "key": "transparent",
+      "title": {
+        "en": "Transparent",
+        "ua": "Прозорий",
+        "ru": "Прозрачный"
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "title": {
+    "en": "Condition",
+    "ua": "Стан",
+    "ru": "Состояние"
+  },
+  "description": {
+    "en": "Condition",
+    "ua": "Стан",
+    "ru": "Состояние"
+  },
+  "key": "condition",
+  "type": "select",
+  "values": [
+    {
+      "key": "new",
+      "title": {
+        "en": "New",
+        "ua": "Новий",
+        "ru": "Новый"
+      }
+    },
+    {
+      "key": "used",
+      "title": {
+        "en": "Used",
+        "ua": "Вживаний",
+        "ru": "Б/у"
+      }
+    }
+  ]
+}

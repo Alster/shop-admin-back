@@ -1,0 +1,160 @@
+{
+  "title": {
+    "en": "Fabric Composition",
+    "ua": "Склад тканини",
+    "ru": "Состав ткани"
+  },
+  "description": {
+    "en": "Fabric Composition",
+    "ua": "Склад тканини",
+    "ru": "Состав ткани"
+  },
+  "key": "fabricComposition",
+  "type": "select",
+  "values": [
+    {
+      "key": "cotton",
+      "title": {
+        "en": "Cotton",
+        "ua": "Бавовна",
+        "ru": "Хлопок"
+      }
+    },
+    {
+      "key": "viscose",
+      "title": {
+        "en": "Viscose",
+        "ua": "Віскоза",
+        "ru": "Вискоза"
+      }
+    },
+    {
+      "key": "polyester",
+      "title": {
+        "en": "Polyester",
+        "ua": "Поліестер",
+        "ru": "Полиэстер"
+      }
+    },
+    {
+      "key": "wool",
+      "title": {
+        "en": "Wool",
+        "ua": "Вовна",
+        "ru": "Шерсть"
+      }
+    },
+    {
+      "key": "silk",
+      "title": {
+        "en": "Silk",
+        "ua": "Шовк",
+        "ru": "Шелк"
+      }
+    },
+    {
+      "key": "linen",
+      "title": {
+        "en": "Linen",
+        "ua": "Льон",
+        "ru": "Лён"
+      }
+    },
+    {
+      "key": "polyamide",
+      "title": {
+        "en": "Polyamide",
+        "ua": "Поліамід",
+        "ru": "Полиамид"
+      }
+    },
+    {
+      "key": "elastane",
+      "title": {
+        "en": "Elastane",
+        "ua": "Еластан",
+        "ru": "Эластан"
+      }
+    },
+    {
+      "key": "acrylic",
+      "title": {
+        "en": "Acrylic",
+        "ua": "Акрил",
+        "ru": "Акрил"
+      }
+    },
+    {
+      "key": "polyurethane",
+      "title": {
+        "en": "Polyurethane",
+        "ua": "Поліуретан",
+        "ru": "Полиуретан"
+      }
+    },
+    {
+      "key": "polypropylene",
+      "title": {
+        "en": "Polypropylene",
+        "ua": "Поліпропілен",
+        "ru": "Полипропилен"
+      }
+    },
+    {
+      "key": "modal",
+      "title": {
+        "en": "Modal",
+        "ua": "Модал",
+        "ru": "Модал"
+      }
+    },
+    {
+      "key": "cashmere",
+      "title": {
+        "en": "Cashmere",
+        "ua": "Кашемір",
+        "ru": "Кашемир"
+      }
+    },
+    {
+      "key": "angora",
+      "title": {
+        "en": "Angora",
+        "ua": "Ангора",
+        "ru": "Ангора"
+      }
+    },
+    {
+      "key": "alpaca",
+      "title": {
+        "en": "Alpaca",
+        "ua": "Альпака",
+        "ru": "Альпака"
+      }
+    },
+    {
+      "key": "mohair",
+      "title": {
+        "en": "Mohair",
+        "ua": "Мохер",
+        "ru": "Мохер"
+      }
+    },
+    {
+      "key": "nylon",
+      "title": {
+        "en": "Nylon",
+        "ua": "Нейлон",
+        "ru": "Нейлон"
+      }
+    },
+    {
+      "key": "polyethylene",
+      "title": {
+        "en": "Polyethylene",
+        "ua": "Поліетилен",
+        "ru": "Полиэтилен"
+      }
+    }
+  ]
+}

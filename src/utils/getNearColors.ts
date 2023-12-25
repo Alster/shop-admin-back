@@ -3,7 +3,7 @@ import { diff } from "color-diff";
 // @ts-expect-error - no typings for this package
 import { fromString } from "css-color-converter";
 
-import * as colorAttributes from "../../shop-shared-server/seed/itemAttribute.color.example.json";
+import * as colorAttributes from "../seed/itemAttribute.color.example.json";
 
 const colorsList = colorAttributes.values
 	.map((value) => value.key)

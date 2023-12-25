@@ -1,0 +1,104 @@
+{
+  "title": {
+    "en": "Style",
+    "ua": "Стиль",
+    "ru": "Стиль"
+  },
+  "description": {
+    "en": "Style of the cloches",
+    "ua": "Стиль одягу",
+    "ru": "Стиль одежды"
+  },
+  "key": "style",
+  "type": "select",
+  "values": [
+    {
+      "key": "casual",
+      "title": {
+        "en": "Casual",
+        "ua": "Повсякденний",
+        "ru": "Повседневный"
+      }
+    },
+    {
+      "key": "elegant",
+      "title": {
+        "en": "Elegant",
+        "ua": "Елегантний",
+        "ru": "Элегантный"
+      }
+    },
+    {
+      "key": "sport",
+      "title": {
+        "en": "Sport",
+        "ua": "Спортивний",
+        "ru": "Спортивный"
+      }
+    },
+    {
+"key": "classic",
+      "title": {
+        "en": "Classic",
+        "ua": "Класичний",
+        "ru": "Классический"
+      }
+    },
+    {
+      "key": "business",
+      "title": {
+        "en": "Business",
+        "ua": "Діловий",
+        "ru": "Деловой"
+      }
+    },
+    {
+      "key": "military",
+      "title": {
+        "en": "Military",
+        "ua": "Військовий",
+        "ru": "Военный"
+      }
+    },
+    {
+      "key": "retro",
+      "title": {
+        "en": "Retro",
+        "ua": "Ретро",
+        "ru": "Ретро"
+      }
+    },
+    {
+      "key": "vintage",
+      "title": {
+        "en": "Vintage",
+        "ua": "Вінтажний",
+        "ru": "Винтажный"
+      }
+    },
+    {
+      "key": "modern",
+      "title": {
+        "en": "Modern",
+        "ua": "Сучасний",
+        "ru": "Современный"
+      }
+    },
+    {
+      "key": "futuristic",
+      "title": {
+        "en": "Futuristic",
+        "ua": "Футуристичний",
+        "ru": "Футуристический"
+      }
+    },
+    {
+      "key": "other",
+      "title": {
+        "en": "Other",
+        "ua": "Інший",
+        "ru": "Другой"
+      }
+    }
+  ]
+}
