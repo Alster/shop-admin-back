@@ -1,5 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { KEYWORD } from "color-convert/conversions";
 import { ObjectId } from "mongodb";
 import { Model } from "mongoose";
 
@@ -17,6 +18,7 @@ import { ProductDocument } from "../../../shop-shared-server/schema/product.sche
 import { CategoryService } from "../../../shop-shared-server/service/category/category.service";
 import { ProductService } from "../../../shop-shared-server/service/product/product.service";
 import categoriesTree from "../../seed/categoriesTree.example.json";
+import { generateImage } from "../../seed/colorImages/generateColorImages";
 import attributeColor from "../../seed/itemAttribute.color.example.json";
 import attributeCondition from "../../seed/itemAttribute.condition.example.json";
 import attributeFabricComposition from "../../seed/itemAttribute.fabricComposition.example.json";
@@ -87,7 +89,7 @@ export default class SeedService {
 		this.logger.log("seedProducts");
 		await this.productService.removeAllProducts();
 
-		const productsPerCategory = [10, 20] as const;
+		const productsPerCategory = [2, 3] as const;
 		const itemsPerProduct = [1, 5] as const;
 		const colorsPerItem = [1, 3] as const;
 		const priceRange = [100, 10_000] as const;
@@ -133,7 +135,8 @@ export default class SeedService {
 					: getOneValueFromSet(valuesSet),
 			}) as Record<AttributeName, string[]>;
 
-		const baseAttributes = ["condition", "fabricComposition", "style"] as const;
+		const characteristics = ["condition", "fabricComposition", "style"] as const;
+		const baseAttributes = [] as const;
 
 		const categoryToAttributesMap = new Map<string, string[]>([["shoes", ["sizeShoes"]]]);
 
@@ -175,8 +178,9 @@ export default class SeedService {
 							}),
 							{},
 						),
-						...(category.publicId === "shoes" &&
-							generateAttributeValues("sizeShoes", attributeValueSets["sizeShoes"])),
+						...(category.publicId === "shoes"
+							? generateAttributeValues("sizeShoes", attributeValueSets["sizeShoes"])
+							: generateAttributeValues("size", attributeValueSets["size"])),
 					},
 				};
 			});
@@ -187,16 +191,59 @@ export default class SeedService {
 				items,
 			});
 
-			const makeUpdateData = (product: ProductDocument): UpdateProductRequestDto => {
+			const makeUpdateData = async (
+				product: ProductDocument,
+			): Promise<UpdateProductRequestDto> => {
+				// eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
 				const { _id, categories, ...updateData } = { ...product };
 
 				const description = generateSampleText(3);
 
-				// const images
+				const imagesByColorEntries = await Promise.all(
+					items.map(async (item) => {
+						const colorsFromAttribute = item.attributes[
+							AttributesEnum.COLOR
+						] as string[];
+						const bannedColors = new Set([
+							"transparent",
+							"multicolor",
+							"silver",
+							"gold",
+						]);
+						const defaultColor = "white" as const;
+						const keywords = colorsFromAttribute.map((color) =>
+							bannedColors.has(color) ? defaultColor : color,
+						) as KEYWORD[];
+
+						const imageBuffer = await generateImage(keywords);
+						const mainColor = colorsFromAttribute[0] as string;
+
+						const imageId = await this.imageUploaderService.uploadProductImage(
+							product._id.toString(),
+							imageBuffer,
+						);
+
+						return [mainColor, [imageId]];
+					}),
+				);
+
+				const imagesByColor = Object.fromEntries(imagesByColorEntries);
 
 				return {
 					...updateData,
+					items,
+					imagesByColor,
 					categories: [category._id.toString()],
+					characteristics: characteristics.reduce(
+						(accumulator, attributeName) => ({
+							...accumulator,
+							...generateAttributeValues(
+								attributeName,
+								attributeValueSets[attributeName],
+							),
+						}),
+						{},
+					),
 					title: category.title,
 					description: {
 						[LanguageEnum.ua]: description,
@@ -211,7 +258,7 @@ export default class SeedService {
 
 			await this.productService.updateProduct(
 				createdProduct._id.toString(),
-				makeUpdateData(createdProduct),
+				await makeUpdateData(createdProduct),
 			);
 		};
 
