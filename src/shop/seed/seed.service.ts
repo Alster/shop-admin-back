@@ -1,12 +1,14 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
+import { PromisePool } from "@supercharge/promise-pool";
+import * as assert from "assert";
 import { KEYWORD } from "color-convert/conversions";
 import { ObjectId } from "mongodb";
 import { Model } from "mongoose";
 
 import { AttributesEnum } from "../../../shop-shared/constants/attributesEnum";
 import { LanguageEnum } from "../../../shop-shared/constants/localization";
-import { ProductItemDto } from "../../../shop-shared/dto/product/product.dto";
+import { ProductAttributesDto, ProductItemDto } from "../../../shop-shared/dto/product/product.dto";
 import generateSampleText from "../../../shop-shared/utils/generateSampleText";
 import { UpdateProductRequestDto } from "../../../shop-shared-server/dto/updateProduct.request.dto";
 import { CategoryNode } from "../../../shop-shared-server/schema/categoriesTree.schema";
@@ -89,7 +91,7 @@ export default class SeedService {
 		this.logger.log("seedProducts");
 		await this.productService.removeAllProducts();
 
-		const productsPerCategory = [2, 3] as const;
+		const productsPerCategory = [5, 10] as const;
 		const itemsPerProduct = [1, 5] as const;
 		const colorsPerItem = [1, 3] as const;
 		const priceRange = [100, 10_000] as const;
@@ -138,7 +140,7 @@ export default class SeedService {
 		const characteristics = ["condition", "fabricComposition", "style"] as const;
 		const baseAttributes = [] as const;
 
-		const categoryToAttributesMap = new Map<string, string[]>([["shoes", ["sizeShoes"]]]);
+		// const categoryToAttributesMap = new Map<string, string[]>([["shoes", ["sizeShoes"]]]);
 
 		const getCategoriesLastChildren = (categories: CategoryNode[]): CategoryNode[] => {
 			return categories.flatMap((category) => {
@@ -159,31 +161,72 @@ export default class SeedService {
 			const name = category.title.en;
 			const price = getValueInRange(priceRange);
 			const itemsCount = getValueInRange(itemsPerProduct);
-			const items = Array.from({ length: itemsCount }).map((): ProductItemDto => {
-				return {
-					sku: new ObjectId().toString(),
-					attributes: {
-						...generateAttributeValues(
+
+			const items = await Promise.all(
+				Array.from({ length: itemsCount }).map(
+					// eslint-disable-next-line no-unused-vars
+					async (_dummyVariable, _index): Promise<ProductItemDto> => {
+						const sku = new ObjectId().toString();
+
+						const colorAttributes = generateAttributeValues(
 							AttributesEnum.COLOR,
 							attributeValueSets[AttributesEnum.COLOR],
 							colorsPerItem,
-						),
-						...baseAttributes.reduce(
-							(accumulator, attributeName) => ({
-								...accumulator,
-								...generateAttributeValues(
-									attributeName,
-									attributeValueSets[attributeName],
-								),
-							}),
-							{},
-						),
-						...(category.publicId === "shoes"
-							? generateAttributeValues("sizeShoes", attributeValueSets["sizeShoes"])
-							: generateAttributeValues("size", attributeValueSets["size"])),
+						);
+
+						const generateColorImages = async (
+							colorsFromAttribute: string[],
+						): Promise<string[]> => {
+							const bannedColors = new Set([
+								"transparent",
+								"multicolor",
+								"silver",
+								"gold",
+							]);
+							const defaultColor = "white" as const;
+							const keywords = colorsFromAttribute.map((color) =>
+								bannedColors.has(color) ? defaultColor : color,
+							) as KEYWORD[];
+
+							const imageBuffer = await generateImage(keywords);
+							const mainColor = colorsFromAttribute[0] as string;
+
+							const imageId = await this.imageUploaderService.uploadProductImage(
+								sku,
+								imageBuffer,
+							);
+
+							return [imageId];
+						};
+
+						const images = await generateColorImages(
+							colorAttributes[AttributesEnum.COLOR],
+						);
+
+						const attributes = {
+							...colorAttributes,
+							...baseAttributes.reduce(
+								(accumulator, attributeName) => ({
+									...accumulator,
+									...generateAttributeValues(
+										attributeName,
+										attributeValueSets[attributeName],
+									),
+								}),
+								{},
+							),
+							...(category.publicId === "shoes"
+								? generateAttributeValues(
+										"sizeShoes",
+										attributeValueSets["sizeShoes"],
+								  )
+								: generateAttributeValues("size", attributeValueSets["size"])),
+						} as const satisfies ProductAttributesDto;
+
+						return { sku, images, attributes };
 					},
-				};
-			});
+				),
+			);
 
 			const createdProduct = await this.productService.createProduct({
 				name,
@@ -199,40 +242,9 @@ export default class SeedService {
 
 				const description = generateSampleText(3);
 
-				const imagesByColorEntries = await Promise.all(
-					items.map(async (item) => {
-						const colorsFromAttribute = item.attributes[
-							AttributesEnum.COLOR
-						] as string[];
-						const bannedColors = new Set([
-							"transparent",
-							"multicolor",
-							"silver",
-							"gold",
-						]);
-						const defaultColor = "white" as const;
-						const keywords = colorsFromAttribute.map((color) =>
-							bannedColors.has(color) ? defaultColor : color,
-						) as KEYWORD[];
-
-						const imageBuffer = await generateImage(keywords);
-						const mainColor = colorsFromAttribute[0] as string;
-
-						const imageId = await this.imageUploaderService.uploadProductImage(
-							product._id.toString(),
-							imageBuffer,
-						);
-
-						return [mainColor, [imageId]];
-					}),
-				);
-
-				const imagesByColor = Object.fromEntries(imagesByColorEntries);
-
 				return {
 					...updateData,
 					items,
-					imagesByColor,
 					categories: [category._id.toString()],
 					characteristics: characteristics.reduce(
 						(accumulator, attributeName) => ({
@@ -262,12 +274,25 @@ export default class SeedService {
 			);
 		};
 
-		await Promise.all(
-			lastCategories.flatMap((category) =>
-				Array.from({ length: getValueInRange(productsPerCategory) }).map(async () =>
-					createProductInCategory(category),
-				),
-			),
+		const categoriesToProcess = lastCategories.flatMap((category) =>
+			Array.from<CategoryNode>({
+				length: getValueInRange(productsPerCategory),
+			}).fill(category),
 		);
+
+		const { results: createProductResults, errors: createProductErrors } =
+			await PromisePool.withConcurrency(10)
+				.for(categoriesToProcess)
+				.process(async (category, index): Promise<void> => {
+					await createProductInCategory(category);
+					this.logger.debug(`Product ${index} of ${categoriesToProcess.length}`);
+				});
+
+		assert.ok(
+			!createProductErrors || createProductErrors.length === 0,
+			JSON.stringify(createProductErrors, null, 2),
+		);
+
+		this.logger.debug(`All jobs done!`);
 	}
 }
