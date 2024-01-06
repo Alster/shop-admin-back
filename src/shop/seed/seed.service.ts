@@ -94,15 +94,19 @@ export default class SeedService {
 		this.logger.log("seedProducts");
 		await this.productService.removeAllProducts();
 
+		const characteristics = ["condition", "fabricComposition", "style"] as const;
+		const baseAttributes = [] as const;
+
 		const productsPerCategory = [1, 5] as const;
 		const itemsPerProduct = [1, 2] as const;
 		const colorsPerItem = [1, 3] as const;
 		const imagesPerItem = [1, 5] as const;
+		const characteristicsPerProduct = [
+			characteristics.length - 1,
+			characteristics.length,
+		] as const;
+		const characteristicsValuesCount = [1, 3] as const;
 		const priceRange = [1000, 100_000] as const;
-
-		const getValueInRange = <const T extends readonly [number, number]>([a, b]: T): number => {
-			return Math.round(a + (b - a) * Math.random());
-		};
 
 		const attributeValueSets = {
 			[AttributesEnum.COLOR]: attributeColor.values.map((value) => value.key),
@@ -113,80 +117,9 @@ export default class SeedService {
 			style: attributeStyle.values.map((value) => value.key),
 		} as const;
 
-		const getValuesFromSet = <const ValuesRange extends readonly [number, number]>(
-			[a, b]: ValuesRange,
-			set: string[],
-		): string[] => {
-			const count = Math.round(a + (b - a) * Math.random());
-			return [
-				...new Set(
-					Array.from({ length: count }).map(
-						() => set[Math.floor(Math.random() * set.length)]!,
-					),
-				),
-			];
-		};
-
-		const getOneValueFromSet = (set: string[]): string[] => {
-			return [set[Math.floor(Math.random() * set.length)]!];
-		};
-
-		const generateAttributeValues = <
-			const AttributeName extends string,
-			const ValuesRange extends readonly [number, number],
-		>(
-			attributeName: AttributeName,
-			valuesSet: string[],
-			valuesRange?: ValuesRange,
-		): Record<AttributeName, string[]> =>
-			({
-				[attributeName]: valuesRange
-					? getValuesFromSet(valuesRange, valuesSet)
-					: getOneValueFromSet(valuesSet),
-			}) as Record<AttributeName, string[]>;
-
-		const characteristics = ["condition", "fabricComposition", "style"] as const;
-		const baseAttributes = [] as const;
-
-		// With this function we can generate randomized attributes for product
-		// It with some probability removes some attributes from the list
-		// And with some proobability duplicates some attributes in the list
-		const getRandomizedAttributes = <
-			const Input extends ReadonlyArray<string>,
-			const V extends Input[number],
-		>(
-			attributes: Input,
-		): V[] => {
-			const probabilityOfRemovingAttribute = 0.3;
-			const probabilityOfDuplicatingAttribute = 0.3;
-
-			const result = attributes.filter(
-				() => Math.random() > probabilityOfRemovingAttribute,
-			) as Input[number][];
-
-			return result.flatMap((attribute) =>
-				Math.random() > probabilityOfDuplicatingAttribute
-					? [attribute]
-					: [attribute, attribute],
-			) as V[];
-		};
-
-		// const categoryToAttributesMap = new Map<string, string[]>([["shoes", ["sizeShoes"]]]);
-
-		const getCategoriesLastChildren = (categories: CategoryNode[]): CategoryNode[] => {
-			return categories.flatMap((category) => {
-				if (category.children.length === 0) {
-					return [category];
-				}
-				return getCategoriesLastChildren(category.children);
-			});
-		};
-
 		const lastCategories = getCategoriesLastChildren(
 			categoriesTree.map((category) => addObjectId(category)),
 		);
-		// this.logger.log(`lastCategories: ${lastCategories.length}`);
-		// this.logger.log(`lastCategories: ${lastCategories.map((category) => category.title.en)}`);
 
 		const createProductInCategory = async (category: CategoryNode): Promise<void> => {
 			const name = category.title.en;
@@ -215,10 +148,9 @@ export default class SeedService {
 						);
 
 						const generateColorImages = async (
-							colorsFromAttribute: string[],
+							colorsFromAttribute: readonly string[],
 						): Promise<string[]> => {
 							const keywords = colorsFromAttribute as KEYWORD[];
-							const mainColor = colorsFromAttribute[0] as string;
 							const imagesCount = getValueInRange(imagesPerItem);
 
 							return await Promise.all(
@@ -285,18 +217,24 @@ export default class SeedService {
 					return `${publicIdPrefix}-${randomString}`;
 				};
 
+				const productCharacteristics = getValuesFromSet(
+					characteristicsPerProduct,
+					characteristics,
+				);
+
 				return {
 					...updateData,
 					publicId: makePublicId(),
 					price,
 					items,
 					categories: [category._id.toString()],
-					characteristics: getRandomizedAttributes(characteristics).reduce(
+					characteristics: productCharacteristics.reduce(
 						(accumulator, attributeName) => ({
 							...accumulator,
 							...generateAttributeValues(
 								attributeName,
 								attributeValueSets[attributeName],
+								characteristicsValuesCount,
 							),
 						}),
 						{},
@@ -332,9 +270,6 @@ export default class SeedService {
 							`Processing product ${index} of ${categoriesToProcess.length}`,
 						);
 						await createProductInCategory(category);
-						// this.logger.debug(
-						// 	`Product ${index} of ${categoriesToProcess.length} proceeded.`,
-						// );
 					} catch (error: unknown) {
 						if (error instanceof Error) {
 							this.logger.error(error.stack);
@@ -349,6 +284,55 @@ export default class SeedService {
 				.join("\n")}.`,
 		);
 
-		this.logger.debug(`All jobs done!`);
+		this.logger.debug(`All jobs done! ✨`);
 	}
 }
+
+const getValueInRange = <const T extends readonly [number, number]>([a, b]: T): number => {
+	return Math.round(a + (b - a) * Math.random());
+};
+
+const getValuesFromSet = <
+	const ValuesRange extends readonly [number, number],
+	const SuperString extends string,
+>(
+	[a, b]: ValuesRange,
+	set: ReadonlyArray<SuperString>,
+): ReadonlyArray<SuperString> => {
+	const count = Math.round(a + (b - a) * Math.random());
+	return [
+		...new Set(
+			Array.from({ length: count }).map(() => set[Math.floor(Math.random() * set.length)]!),
+		),
+	];
+};
+
+const getOneValueFromSet = <const SuperString extends string>(
+	set: ReadonlyArray<SuperString>,
+): ReadonlyArray<SuperString> => {
+	return [set[Math.floor(Math.random() * set.length)]!];
+};
+
+const generateAttributeValues = <
+	const AttributeName extends string,
+	const ValuesRange extends readonly [number, number],
+	const SuperString extends string,
+>(
+	attributeName: AttributeName,
+	valuesSet: ReadonlyArray<SuperString>,
+	valuesRange?: ValuesRange,
+): Record<AttributeName, ReadonlyArray<SuperString>> =>
+	({
+		[attributeName]: valuesRange
+			? getValuesFromSet(valuesRange, valuesSet)
+			: getOneValueFromSet(valuesSet),
+	}) as Record<AttributeName, ReadonlyArray<SuperString>>;
+
+const getCategoriesLastChildren = (categories: CategoryNode[]): CategoryNode[] => {
+	return categories.flatMap((category) => {
+		if (category.children.length === 0) {
+			return [category];
+		}
+		return getCategoriesLastChildren(category.children);
+	});
+};
