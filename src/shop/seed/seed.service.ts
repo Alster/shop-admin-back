@@ -2,6 +2,7 @@ import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { PromisePool } from "@supercharge/promise-pool";
 import * as assert from "assert";
+import { arrayContains } from "class-validator";
 import { KEYWORD } from "color-convert/conversions";
 import { ObjectId } from "mongodb";
 import { Model } from "mongoose";
@@ -9,6 +10,8 @@ import { Model } from "mongoose";
 import { AttributesEnum } from "../../../shop-shared/constants/attributesEnum";
 import { LanguageEnum } from "../../../shop-shared/constants/localization";
 import { ProductAttributesDto, ProductItemDto } from "../../../shop-shared/dto/product/product.dto";
+import { generatePublicId } from "../../../shop-shared/utils/generatePublicId";
+import { generateRandomString } from "../../../shop-shared/utils/generateRandomString";
 import generateSampleText from "../../../shop-shared/utils/generateSampleText";
 import { UpdateProductRequestDto } from "../../../shop-shared-server/dto/updateProduct.request.dto";
 import { CategoryNode } from "../../../shop-shared-server/schema/categoriesTree.schema";
@@ -91,10 +94,11 @@ export default class SeedService {
 		this.logger.log("seedProducts");
 		await this.productService.removeAllProducts();
 
-		const productsPerCategory = [5, 10] as const;
-		const itemsPerProduct = [1, 5] as const;
+		const productsPerCategory = [1, 5] as const;
+		const itemsPerProduct = [1, 2] as const;
 		const colorsPerItem = [1, 3] as const;
-		const priceRange = [100, 10_000] as const;
+		const imagesPerItem = [1, 5] as const;
+		const priceRange = [1000, 100_000] as const;
 
 		const getValueInRange = <const T extends readonly [number, number]>([a, b]: T): number => {
 			return Math.round(a + (b - a) * Math.random());
@@ -114,9 +118,13 @@ export default class SeedService {
 			set: string[],
 		): string[] => {
 			const count = Math.round(a + (b - a) * Math.random());
-			return Array.from({ length: count }).map(
-				() => set[Math.floor(Math.random() * set.length)]!,
-			);
+			return [
+				...new Set(
+					Array.from({ length: count }).map(
+						() => set[Math.floor(Math.random() * set.length)]!,
+					),
+				),
+			];
 		};
 
 		const getOneValueFromSet = (set: string[]): string[] => {
@@ -139,6 +147,29 @@ export default class SeedService {
 
 		const characteristics = ["condition", "fabricComposition", "style"] as const;
 		const baseAttributes = [] as const;
+
+		// With this function we can generate randomized attributes for product
+		// It with some probability removes some attributes from the list
+		// And with some proobability duplicates some attributes in the list
+		const getRandomizedAttributes = <
+			const Input extends ReadonlyArray<string>,
+			const V extends Input[number],
+		>(
+			attributes: Input,
+		): V[] => {
+			const probabilityOfRemovingAttribute = 0.3;
+			const probabilityOfDuplicatingAttribute = 0.3;
+
+			const result = attributes.filter(
+				() => Math.random() > probabilityOfRemovingAttribute,
+			) as Input[number][];
+
+			return result.flatMap((attribute) =>
+				Math.random() > probabilityOfDuplicatingAttribute
+					? [attribute]
+					: [attribute, attribute],
+			) as V[];
+		};
 
 		// const categoryToAttributesMap = new Map<string, string[]>([["shoes", ["sizeShoes"]]]);
 
@@ -168,35 +199,40 @@ export default class SeedService {
 					async (_dummyVariable, _index): Promise<ProductItemDto> => {
 						const sku = new ObjectId().toString();
 
+						const bannedColors = new Set([
+							"transparent",
+							"multicolor",
+							"silver",
+							"gold",
+						]);
+
 						const colorAttributes = generateAttributeValues(
 							AttributesEnum.COLOR,
-							attributeValueSets[AttributesEnum.COLOR],
+							attributeValueSets[AttributesEnum.COLOR].filter(
+								(v) => !bannedColors.has(v),
+							),
 							colorsPerItem,
 						);
 
 						const generateColorImages = async (
 							colorsFromAttribute: string[],
 						): Promise<string[]> => {
-							const bannedColors = new Set([
-								"transparent",
-								"multicolor",
-								"silver",
-								"gold",
-							]);
-							const defaultColor = "white" as const;
-							const keywords = colorsFromAttribute.map((color) =>
-								bannedColors.has(color) ? defaultColor : color,
-							) as KEYWORD[];
-
-							const imageBuffer = await generateImage(keywords);
+							const keywords = colorsFromAttribute as KEYWORD[];
 							const mainColor = colorsFromAttribute[0] as string;
+							const imagesCount = getValueInRange(imagesPerItem);
 
-							const imageId = await this.imageUploaderService.uploadProductImage(
-								sku,
-								imageBuffer,
+							return await Promise.all(
+								Array.from({ length: imagesCount }).map(
+									async (): Promise<string> => {
+										const imageBuffer = await generateImage(keywords);
+
+										return await this.imageUploaderService.uploadProductImage(
+											sku,
+											imageBuffer,
+										);
+									},
+								),
 							);
-
-							return [imageId];
 						};
 
 						const images = await generateColorImages(
@@ -215,7 +251,7 @@ export default class SeedService {
 								}),
 								{},
 							),
-							...(category.publicId === "shoes"
+							...(arrayContains(category.publicId, ["sneakers", "boots", "slippers"])
 								? generateAttributeValues(
 										"sizeShoes",
 										attributeValueSets["sizeShoes"],
@@ -240,13 +276,22 @@ export default class SeedService {
 				// eslint-disable-next-line @typescript-eslint/no-unused-vars,no-unused-vars
 				const { _id, categories, ...updateData } = { ...product };
 
+				const title = category.title;
 				const description = generateSampleText(3);
+
+				const makePublicId = () => {
+					const publicIdPrefix = generatePublicId(title.en);
+					const randomString = generateRandomString(6);
+					return `${publicIdPrefix}-${randomString}`;
+				};
 
 				return {
 					...updateData,
+					publicId: makePublicId(),
+					price,
 					items,
 					categories: [category._id.toString()],
-					characteristics: characteristics.reduce(
+					characteristics: getRandomizedAttributes(characteristics).reduce(
 						(accumulator, attributeName) => ({
 							...accumulator,
 							...generateAttributeValues(
@@ -256,7 +301,7 @@ export default class SeedService {
 						}),
 						{},
 					),
-					title: category.title,
+					title,
 					description: {
 						[LanguageEnum.ua]: description,
 						[LanguageEnum.en]: description,
@@ -265,8 +310,6 @@ export default class SeedService {
 					active: true,
 				};
 			};
-
-			// await generateImage()
 
 			await this.productService.updateProduct(
 				createdProduct._id.toString(),
@@ -284,13 +327,26 @@ export default class SeedService {
 			await PromisePool.withConcurrency(10)
 				.for(categoriesToProcess)
 				.process(async (category, index): Promise<void> => {
-					await createProductInCategory(category);
-					this.logger.debug(`Product ${index} of ${categoriesToProcess.length}`);
+					try {
+						this.logger.log(
+							`Processing product ${index} of ${categoriesToProcess.length}`,
+						);
+						await createProductInCategory(category);
+						// this.logger.debug(
+						// 	`Product ${index} of ${categoriesToProcess.length} proceeded.`,
+						// );
+					} catch (error: unknown) {
+						if (error instanceof Error) {
+							this.logger.error(error.stack);
+						}
+					}
 				});
 
 		assert.ok(
 			!createProductErrors || createProductErrors.length === 0,
-			JSON.stringify(createProductErrors, null, 2),
+			`createProductErrors: ${createProductErrors
+				.map((error) => `${error.message}\n${error.stack}`)
+				.join("\n")}.`,
 		);
 
 		this.logger.debug(`All jobs done!`);

@@ -74,11 +74,15 @@ function bufferColorful(colors: HSL[]) {
 
 	const svg = `<?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="${swgWidth}" height="${swgHeight}">
-	<radialGradient id="radialGradient1" cx="${centerX1}" cy="${centerY1}" r="${radius}" gradientUnits="userSpaceOnUse">
+	<radialGradient id="radialGradient1" cx="${randomizeMaxValue(centerX1)}" cy="${randomizeMaxValue(
+		centerY1,
+	)}" r="${randomizeMaxValue(radius)}" gradientUnits="userSpaceOnUse">
 		<stop offset="0.1" style="stop-color:${hslToString(gradientColors.radialGradient1[0])}" />
 		<stop offset="0.6" style="stop-color:${hslToString(gradientColors.radialGradient1[1])};" />
 	</radialGradient>
-	<radialGradient id="radialGradient2" cx="${centerX2}" cy="${centerY2}" r="${radius}" gradientUnits="userSpaceOnUse">
+	<radialGradient id="radialGradient2" cx="${randomizeMaxValue(centerX2)}" cy="${randomizeMaxValue(
+		centerY2,
+	)}" r="${randomizeMaxValue(radius)}" gradientUnits="userSpaceOnUse">
 		<stop offset="0.1" style="stop-color:${hslToString(gradientColors.radialGradient2[0])}" />
 		<stop offset="0.6" style="stop-color:${hslToString(
 			gradientColors.radialGradient2[1],
@@ -93,8 +97,10 @@ function bufferColorful(colors: HSL[]) {
 	return Buffer.from(svg);
 }
 
-function randomNumber(number: number) {
-	return Math.random() * number;
+function randomizeMaxValue(maxValue: number) {
+	const scalar = Math.random() * Math.random();
+	const scalarReverted = 1 - scalar;
+	return maxValue * scalarReverted;
 }
 
 function hslToString(hsl: HSL) {
