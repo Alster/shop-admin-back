@@ -9,4 +9,5 @@
 /.yarn
 /.github
 /.run
-/spec.json
+/.git
+/.gitignore

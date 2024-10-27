@@ -1,6 +1,16 @@
-version: "3"
+version: "3.8"
 
 services:
+#  shop-admin-back:
+#    hostname: unicorn-shop-admin-back
+#    image: unicorn-shop-admin-back
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile
+#      target: base-fat
+#    ports:
+#      - "4300:4300"
+#    command: "pnpm run start:prod"
   mongodb_local_single_replica:
     image: mongo:5.0.4
     container_name: mongodb_local_single_replica
