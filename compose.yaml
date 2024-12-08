@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  shop-app-api:
+    hostname: unicorn-shop-admin-back
+    image: unicorn-shop-admin-back
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3021:3021"

@@ -1,4 +1,9 @@
-/node_modules
+.idea
+.git
+node_modules
+Dockerfile
+
+
 /__tests__
 /__mocks__
 /coverage
@@ -9,5 +14,4 @@
 /.yarn
 /.github
 /.run
-/.git
-/.gitignore
+/spec.json

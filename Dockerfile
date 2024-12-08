@@ -1,19 +1,23 @@
-FROM node:20-slim AS base
+# Base node image:
+FROM node:20-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
-COPY . /app
+
+# Installing dev dependencies:
+FROM base AS builder
 WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,sharing=locked,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+ENV NODE_ENV production
+COPY . .
+RUN pnpm build
 
-FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store,sharing=locked pnpm install --prod --frozen-lockfile
-
-FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store,sharing=locked pnpm install --frozen-lockfile
-RUN pnpm run build
-
-FROM base
-COPY --from=prod-deps /app/node_modules /app/node_modules
-COPY --from=build /app/dist /app/dist
-EXPOSE 4300
-CMD [ "pnpm", "run", "start:prod" ]
+# Installing prod dependencies:
+FROM base AS runner
+ENV NODE_ENV production
+WORKDIR /app
+COPY package.json pnpm-lock.yaml ./
+RUN --mount=type=cache,sharing=locked,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+COPY --from=builder /app/dist ./
+CMD ["pnpm", "run", "start:prod"]
