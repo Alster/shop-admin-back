@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  shop-app-api:
+  shop-admin-back:
     hostname: unicorn-shop-admin-back
     image: unicorn-shop-admin-back
     build:
@@ -13,4 +13,4 @@ services:
     environment:
       - NODE_ENV=production
     ports:
-      - "3021:3021"
+      - "4300:4300"

@@ -2,9 +2,10 @@ import { Injectable, OnModuleInit } from "@nestjs/common";
 import { InjectS3, S3 } from "nestjs-s3";
 import sharp from "sharp";
 
+import MainConfigService from "@/src/config/main.config.service";
+
 import getProductImageFilename from "../../shop-shared/utils/getProductImageFilename";
 import randomString from "../../shop-shared-server/helpers/randomString";
-import { Config } from "../config/config";
 import { ImageConfigurations } from "../constants/imageConfigurations";
 import KindEnum from "../constants/kind.enum";
 
@@ -13,8 +14,11 @@ const FILENAME_SIZE = 36;
 @Injectable()
 export class ImageUploaderService implements OnModuleInit {
 	private readonly bucketName: string;
-	constructor(@InjectS3() private readonly s3: S3) {
-		this.bucketName = Config.get().s3.bucket;
+	constructor(
+		@InjectS3() private readonly s3: S3,
+		private readonly mainConfigService: MainConfigService,
+	) {
+		this.bucketName = mainConfigService.S3_BUCKET;
 	}
 
 	async onModuleInit(): Promise<void> {

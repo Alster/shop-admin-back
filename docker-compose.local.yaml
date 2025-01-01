@@ -1,35 +1,15 @@
-version: "3.8"
+version: "3"
 
 services:
-#  shop-admin-back:
-#    hostname: unicorn-shop-admin-back
-#    image: unicorn-shop-admin-back
-#    build:
-#      context: ./
-#      dockerfile: Dockerfile
-#      target: base-fat
-#    ports:
-#      - "4300:4300"
-#    command: "pnpm run start:prod"
-  mongodb_local_single_replica:
-    image: mongo:5.0.4
-    container_name: mongodb_local_single_replica
-    ports:
-      - "27037:27037"
-    restart: always
-    environment:
-      - MONGODB_DATABASE="unicorn"
-    volumes:
-      - ./docker/volume/mongodb_local:/data/db
-    entrypoint: [ "/usr/bin/mongod", "--port", "27037", "--bind_ip_all", "--replSet", "rs0" ]
-  redis_local:
-    container_name: "redis_local"
-    image: redis:alpine
-    ports:
-      - "6381:6379"
-    restart: always
-    command: redis-server /usr/local/etc/redis/redis.conf
-    volumes:
-      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
-      - ./docker/redis/.ash_history:/root/.ash_history
-      - ./docker/volume/redis_local:/data
+  shop-admin-back:
+    extends:
+      file: ./compose.yaml
+      service: shop-admin-back
+    env_file:
+      - ./.env.local
+
+networks:
+  jumpserver:
+    external: true
+  unicorn:
+    external: true

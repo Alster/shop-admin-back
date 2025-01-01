@@ -9,12 +9,9 @@ class MainConfig {
 
 	@IsUrl({
 		protocols: ["mongodb"],
-		host_whitelist: ["localhost", "127.0.0.1"],
+		host_whitelist: ["localhost", "127.0.0.1", "unicorn-mongodb"],
 	})
 	MONGO_URL: string;
-
-	@IsString()
-	MONOBANK_API_KEY: string;
 
 	//region S3
 	@IsUrl()
